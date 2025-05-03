@@ -19,15 +19,12 @@ class LinkedList<T> {
     this.size = 0;
   }
 
-  //   Add a new node to the end of the list
   append(value: T): void {
     const newNode = new Node(value);
-    // if the list is empty
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      // Add to the end and update tail
       if (this.tail) {
         this.tail.next = newNode;
         this.tail = newNode;
@@ -36,19 +33,48 @@ class LinkedList<T> {
     this.size++;
   }
 
-  //   Add a new node to the beginning of the list
   prepend(value: T): void {
     const newNode = new Node(value);
-
-    // If the list is empty
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      // Add to the beginning and update head
       newNode.next = this.head;
       this.head = newNode;
     }
     this.size++;
+  }
+
+  insertAt(value: T, index: number): boolean {
+    if (index < 0 || index > this.size) {
+      return false;
+    }
+    if (index === 0) {
+      this.prepend(value);
+      return true;
+    }
+    if (index === this.size) {
+      this.append(value);
+      return true;
+    }
+
+    const newNode = new Node(value);
+    let current = this.head;
+    let previous: Node<T> | null = null;
+    let position = 0;
+    while (position < index) {
+      previous = current;
+      current = current?.next || null;
+      position++;
+    }
+
+    if (previous) {
+      newNode.next = current;
+      previous.next = newNode;
+      this.size++;
+      return true;
+    }
+
+    return false;
   }
 }
