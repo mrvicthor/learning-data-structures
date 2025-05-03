@@ -8,7 +8,7 @@ export class Node<T> {
   }
 }
 
-class LinkedList<T> {
+export class LinkedList<T> {
   private head: Node<T> | null;
   private tail: Node<T> | null;
   private size: number;
@@ -76,5 +76,16 @@ class LinkedList<T> {
     }
 
     return false;
+  }
+
+  print(): void {
+    let current = this.head;
+    const values: T[] = [];
+
+    while (current) {
+      values.push(current.value);
+      current = current.next;
+    }
+    console.log(values.join(" -> "));
   }
 }
